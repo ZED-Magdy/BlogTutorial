@@ -1,0 +1,19 @@
+﻿@model WebApplication3.Models.Post
+
+    <article class="mb-4">
+        <div class="">
+            <div class=" justify-content-center">
+                <div class="">
+                    <h2>Id: @Model.Id</h2>
+                    <h1>@Model.Title</h1>
+                    <p>Posted By @Model.Owner.Name at @Model.CreatedAt</p>
+                    <p>
+                        @Model.Content
+                    </p>
+                </div>
+            </div>
+        </div>
+    </article>
+<form action="/Home/Index" method="post">
+
+</form>
