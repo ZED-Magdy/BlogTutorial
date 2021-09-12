@@ -11,15 +11,15 @@ namespace WebApplication3.Controllers
 {
     public class HomeController : Controller
     {
-        private DBContext context { get; set; }
+        private DBContext _context { get; set; }
         public HomeController(DBContext dbContext)
         {
-            context = dbContext;
+            _context = dbContext;
         }
         public IActionResult Index([FromQuery]int page = 1)
         {
-            var perPage = 3;
-            var posts = context.Posts
+            var perPage = 2;
+            var posts = _context.Posts
                 .Skip((page - 1) * perPage)
                 .Take(perPage)
                 .ToList();
@@ -40,15 +40,15 @@ namespace WebApplication3.Controllers
         {
             if(ModelState.IsValid)
             {
-                context.Posts.Add(new Post
+                _context.Posts.Add(new Post
                 {
                     Id = 4,
                     Title = postRequest.Title,
                     Excerpt = postRequest.Excerpt,
                     Content = postRequest.Content,
-                    Owner = context.Users.FirstOrDefault()
+                    Owner = _context.Users.FirstOrDefault()
                 });
-                
+
                 return Redirect("/");
             }
             return View("Create", postRequest);
@@ -56,7 +56,7 @@ namespace WebApplication3.Controllers
 
         public IActionResult Edit([FromRoute] int id)
         {
-            var post = context.Posts.Where(post => post.Id == id).FirstOrDefault();
+            var post = _context.Posts.Where(p => p.Id == id).FirstOrDefault();
             if(post == null)
             {
                 return View("404");
@@ -69,10 +69,11 @@ namespace WebApplication3.Controllers
             };
             return View(request);
         }
+        
         [HttpPost]
         public IActionResult Edit([FromRoute]int id, [FromForm]PostRequest request)
         {
-            var post = context.Posts.Where(post => post.Id == id).FirstOrDefault();
+            var post = _context.Posts.Where(post => post.Id == id).FirstOrDefault();
             if (post == null)
             {
                 return View("404");
@@ -91,7 +92,7 @@ namespace WebApplication3.Controllers
         [HttpGet("/posts/{id}")]
         public IActionResult Details(int id)
         {
-            var post = context.Posts.Where(post => post.Id == id).FirstOrDefault();
+            var post = _context.Posts.Where(post => post.Id == id).FirstOrDefault();
             if(post == null)
             {
                 return View("404");
@@ -100,7 +101,7 @@ namespace WebApplication3.Controllers
         }
         public IActionResult Delete([FromRoute]int id)
         {
-            var post = context.Posts.Where(post => post.Id == id).FirstOrDefault();
+            var post = _context.Posts.Where(post => post.Id == id).FirstOrDefault();
             if (post == null)
             {
                 return View("404");
@@ -110,12 +111,12 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public IActionResult DeleteConfirmed([FromRoute]int id)
         {
-            var post = context.Posts.Where(post => post.Id == id).FirstOrDefault();
+            var post = _context.Posts.Where(post => post.Id == id).FirstOrDefault();
             if (post == null)
             {
                 return View("404");
             }
-            context.Posts.Remove(post);
+            _context.Posts.Remove(post);
             return Redirect("/");
         }
         public IActionResult Privacy()

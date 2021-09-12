@@ -1,0 +1,24 @@
+﻿@model List<WebApplication3.Models.Post>
+    @{
+    ViewData["Title"] = "Home Page";
+    }
+    <a asp-controller="Home" asp-action="Create" class="btn btn-primary">Create new</a>
+    @foreach (var post in Model)
+    {
+    <div class="post-preview">
+        <a asp-controller="Home" asp-action="Details" asp-route-id="@post.Id">
+            <h2 class="post-title">@post.Title</h2>
+            <h3 class="post-subtitle">@post.Excerpt</h3>
+        </a>
+        <p class="post-meta">
+            <h4>Category: @post.Category.Name</h4>
+            Posted by
+            <a href="#!">@post.Owner.Name</a>
+            on @post.CreatedAt
+            <a asp-controller="Home" asp-action="Edit" asp-route-id="@post.Id"><i class="fas fa-edit"></i></a>
+            <a asp-controller="Home" asp-action="Delete" asp-route-id="@post.Id"><i class="fas fa-trash"></i></a>
+        </p>
+    </div>
+    <!-- Divider-->
+    <hr class="my-4" />
+    }

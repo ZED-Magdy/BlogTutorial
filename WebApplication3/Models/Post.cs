@@ -12,6 +12,7 @@ namespace WebApplication3.Models
         public string Excerpt { get; set; }
         public User Owner { get; set; }
         public string Content { get; set; }
+        public Category Category { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     }

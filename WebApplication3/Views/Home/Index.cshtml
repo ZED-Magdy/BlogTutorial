@@ -12,6 +12,7 @@
             <h3 class="post-subtitle">@post.Excerpt</h3>
         </a>
         <p class="post-meta">
+            <h4>Category: @post.Category.Name</h4>
             Posted by
             <a href="#!">@post.Owner.Name</a>
             on @post.CreatedAt
@@ -22,11 +23,16 @@
     <!-- Divider-->
     <hr class="my-4" />
 }
+
 <!-- Pager-->
-@if(Model.Count > 0){
+@if (Model.Count > 0)
+{
     <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" asp-action="Index" asp-route-page="@ViewBag.next_page">Older Posts →</a></div>
 }
-else{
-        <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" asp-action="Index"
-            asp-route-page="@lastPage">Newer Posts →</a></div>
+else
+{
+    <div class="d-flex justify-content-end mb-4">
+        <a class="btn btn-primary text-uppercase" asp-action="Index"
+           asp-route-page="@lastPage">Newer Posts →</a>
+    </div>
 }

@@ -17,5 +17,6 @@ namespace WebApplication3.Models
         [Required]
         [MinLength(20)]
         public string Content { get; set; }
+        public int CategoryId { get; set; }
     }
 }

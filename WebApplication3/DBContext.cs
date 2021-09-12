@@ -8,12 +8,13 @@ namespace WebApplication3
 {
     public class DBContext
     {
-        public List<User> Users { get; set; }
+        private readonly List<User> _Users = new List<User>();
+        public IReadOnlyCollection<User> Users => _Users.AsReadOnly();
         public List<Post> Posts { get; set; }
+        public List<Category> Categories { get; set; }
         public DBContext()
         {
-            Users = new List<User>();
-            Users.AddRange(new List<User>
+            _Users.AddRange(new List<User>
             {
                 new User
                 {
@@ -31,7 +32,20 @@ namespace WebApplication3
                     Email = "abdullah@mail.com"
                 },
             });
-
+            Categories = new List<Category>();
+            Categories.AddRange(new[]
+            {
+                new Category
+                {
+                    Id = 1,
+                    Name = "Space"
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Science"
+                },
+            });
             Posts = new List<Post>();
             Posts.AddRange(new List<Post>
             {
@@ -41,7 +55,8 @@ namespace WebApplication3
                     Excerpt = "Problems look mighty small from 150 miles up",
                     Owner = Users.Where(user => user.Name == "Tuqa").FirstOrDefault(),
                     Content = "Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which ",
-                    Id = 1
+                    Id = 1,
+                    Category = Categories.FirstOrDefault(c => c.Id == 1)
                 },
                 new Post
                 {
@@ -49,7 +64,8 @@ namespace WebApplication3
                     Excerpt = "Problems look mighty small from 150 miles up",
                     Owner = Users.Where(user => user.Name == "Rama").FirstOrDefault(),
                     Content = "Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which ",
-                    Id = 2
+                    Id = 2,
+                    Category = Categories.FirstOrDefault(c => c.Id == 2)
                 },
                 new Post
                 {
@@ -57,9 +73,14 @@ namespace WebApplication3
                     Excerpt = "We predict too much for the next year and yet far too little for the next ten.",
                     Owner = Users.Where(user => user.Name == "Abdullah").FirstOrDefault(),
                     Content = "Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which ",
-                    Id = 3
+                    Id = 3,
+                    Category = Categories.FirstOrDefault(c => c.Id == 2)
                 },
             });
+            var spaceCategoy = Categories.FirstOrDefault(c => c.Id == 1);
+            spaceCategoy.Posts.Add(Posts.FirstOrDefault(p => p.Id == 1));
+            var scienceCategory = Categories.FirstOrDefault(c => c.Id == 2);
+            scienceCategory.Posts.AddRange(Posts.Where(p => p.Id != 1));
         }
     }
 }

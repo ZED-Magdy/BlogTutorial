@@ -1,0 +1,34 @@
+﻿@model List< WebApplication3.Models.Post>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Posts</h1>
+<table class="table table-striped bg-white border-left-primary">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Excerpt</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var post in Model)
+        {
+        <tr>
+            <td>@post.Id</td>
+            <td>@post.Title</td>
+            <td>@post.Excerpt</td>
+            <td>@post.Category.Name</td>
+            <td>
+                <a href="#" class="btn-link">Show</a>
+                | <a href="#" class="btn-link">Edit</a>
+                | <a href="#" class="btn-link">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
